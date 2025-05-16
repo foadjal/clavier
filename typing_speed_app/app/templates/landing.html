@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TypingSpeedApp</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes backgroundAnim {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .animated-bg {
+      background: linear-gradient(270deg, #93c5fd, #a5f3fc, #e0e7ff);
+      background-size: 600% 600%;
+      animation: backgroundAnim 20s ease infinite;
+    }
+  </style>
+</head>
+<body class="animated-bg min-h-screen flex flex-col text-gray-800">
+  <header class="flex justify-between items-center px-8 py-6 bg-white bg-opacity-80 shadow-md">
+    <div class="flex items-center gap-2">
+      <img src="/static/logo.svg" alt="Logo" class="h-10">
+      <span class="text-xl font-bold text-blue-600">TypingSpeedApp</span>
+    </div>
+    <div>
+      <a href="/login" class="text-blue-600 hover:text-blue-800 font-semibold">Connexion</a>
+      <a href="/register" class="ml-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Inscription</a>
+    </div>
+  </header>
+
+  <main class="flex-1 flex items-center justify-center text-center px-6">
+    <div class="max-w-3xl">
+      <h1 class="text-5xl font-extrabold mb-6 text-gray-900 drop-shadow">Mesurez votre vitesse de frappe</h1>
+      <p class="text-lg mb-8 text-gray-700">Rejoignez une plateforme moderne, suivez vos progrès, obtenez votre certificat officiel et défiez vos amis avec des tests de frappe en temps réel.</p>
+      <a href="/register" class="bg-blue-600 text-white px-6 py-3 text-lg rounded-full font-semibold hover:bg-blue-700 transition">Commencer maintenant</a>
+    </div>
+  </main>
+  <section class="py-16 bg-white">
+    <div class="max-w-5xl mx-auto px-6 grid md:grid-cols-3 gap-8">
+      <div class="text-center">
+        <div class="text-5xl text-blue-600 mb-4">⚡</div>
+        <h3 class="text-xl font-bold mb-2">Test rapide</h3>
+        <p class="text-gray-600">Un test de 60 secondes basé sur des textes dynamiques pour une évaluation en temps réel.</p>
+      </div>
+      <div class="text-center">
+        <div class="text-5xl text-blue-600 mb-4">📈</div>
+        <h3 class="text-xl font-bold mb-2">Statistiques précises</h3>
+        <p class="text-gray-600">Comparez vos scores, suivez votre progression et visez l'excellence.</p>
+      </div>
+      <div class="text-center">
+        <div class="text-5xl text-blue-600 mb-4">🎓</div>
+        <h3 class="text-xl font-bold mb-2">Certificat officiel</h3>
+        <p class="text-gray-600">Recevez un PDF attestant votre niveau, téléchargeable à tout moment.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-white bg-opacity-80 py-4 text-center text-sm text-gray-600">
+    &copy; 2025 TypingSpeedApp. Tous droits réservés.
+  </footer>
+</body>
+</html>

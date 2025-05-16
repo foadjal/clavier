@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Certificat</title>
+
+  <!-- REACT + HTML2CANVAS + JSPDF -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Georgia, serif;
+      background: #f0f0f0;
+      padding: 30px;
+    }
+
+    .debug-data {
+      color: red;
+      font-weight: bold;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- ✅ Vérification que Jinja fonctionne -->
+  <div class="debug-data">
+    {{ username }} | {{ email }} | {{ wpm }} | {{ date }}
+  </div>
+
+  <!-- ✅ React s'accroche ici -->
+  <div id="certificat-container"></div>
+
+  <!-- ✅ Script test React -->
+  <script>
+    const { createElement, useRef } = React;
+    const { jsPDF } = window.jspdf;
+
+    function CertificatPDF(props) {
+      return createElement("h1", {
+        style: {
+          color: "#2563EB",
+          fontSize: "28px",
+          textAlign: "center"
+        }
+      }, "✅ React fonctionne pour " + props.username);
+    }
+
+    const props = {
+      username: "{{ username | escape | safe }}",
+      email: "{{ email | escape | safe }}",
+      wpm: {{ wpm }},
+      date: "{{ date | escape | safe }}"
+    };
+
+    console.log("PROPS :", props);
+
+    const container = document.getElementById("certificat-container");
+    if (container && ReactDOM.createRoot) {
+      ReactDOM.createRoot(container).render(createElement(CertificatPDF, props));
+    } else {
+      console.error("❌ ReactDOM ou conteneur introuvable.");
+    }
+  </script>
+</body>
+</html>

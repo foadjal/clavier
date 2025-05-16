@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bienvenue sur TypingSpeedApp</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-white text-gray-800 min-h-screen flex flex-col">
+  <header class="bg-white shadow-md py-6 px-10 flex justify-between items-center">
+    <h1 class="text-2xl font-bold text-blue-600">TypingSpeedApp</h1>
+    <nav>
+      <a href="/login" class="text-blue-600 font-semibold hover:underline">Connexion</a>
+      <a href="/register" class="ml-6 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">S'inscrire</a>
+    </nav>
+  </header>
+
+  <main class="flex-1 flex flex-col items-center justify-center text-center px-4">
+    <h2 class="text-4xl md:text-5xl font-extrabold mb-4">Domptez votre clavier</h2>
+    <p class="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl">
+      Améliorez votre vitesse de frappe, mesurez vos performances, et obtenez un certificat officiel. Accessible, intelligent et 100% gratuit.
+    </p>
+    <a href="/register" class="bg-blue-600 text-white px-8 py-3 rounded-xl text-lg font-semibold hover:bg-blue-700 transition">Commencer maintenant</a>
+  </main>
+
+  <section class="py-16 bg-white">
+    <div class="max-w-5xl mx-auto px-6 grid md:grid-cols-3 gap-8">
+      <div class="text-center">
+        <div class="text-5xl text-blue-600 mb-4">⚡</div>
+        <h3 class="text-xl font-bold mb-2">Test rapide</h3>
+        <p class="text-gray-600">Un test de 60 secondes basé sur des textes dynamiques pour une évaluation en temps réel.</p>
+      </div>
+      <div class="text-center">
+        <div class="text-5xl text-blue-600 mb-4">📈</div>
+        <h3 class="text-xl font-bold mb-2">Statistiques précises</h3>
+        <p class="text-gray-600">Comparez vos scores, suivez votre progression et visez l'excellence.</p>
+      </div>
+      <div class="text-center">
+        <div class="text-5xl text-blue-600 mb-4">🎓</div>
+        <h3 class="text-xl font-bold mb-2">Certificat officiel</h3>
+        <p class="text-gray-600">Recevez un PDF attestant votre niveau, téléchargeable à tout moment.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-gray-100 text-center text-sm text-gray-500 py-6">
+    &copy; 2025 TypingSpeedApp — Développé avec passion
+  </footer>
+</body>
+</html>

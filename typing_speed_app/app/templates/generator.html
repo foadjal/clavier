@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Certificat officiel</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Playfair+Display&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      background: #f9f9f9;
+      padding: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="certificat-root" data-props='{"username": "{{ username | escape | safe }}", "email": "{{ email | escape | safe }}", "wpm": {{ wpm | int }}, "date": "{{ date | escape | safe }}"}'></div>
+
+  <script>
+    const { jsPDF } = window.jspdf;
+    const { createElement, useRef } = React;
+
+    function CertificatAcad(props) {
+      const ref = useRef();
+
+      const downloadPDF = () => {
+        html2canvas(ref.current, { useCORS: true, scrollY: 0 }).then(canvas => {
+          const pdf = new jsPDF("landscape", "pt", "a4");
+          const imgData = canvas.toDataURL("image/png");
+          pdf.addImage(imgData, "PNG", 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight());
+          pdf.save("certificat_typing_speed.pdf");
+        });
+      };
+
+      const certId = `TS-${props.username.toLowerCase().replace(/\s+/g, '')}-${props.date.replace(/\D/g, '')}`;
+
+      return createElement("div", { style: { display: 'flex', flexDirection: 'column', alignItems: 'center' } },
+        createElement("div", {
+          ref,
+          style: {
+            width: '1120px',
+            height: '794px',
+            backgroundColor: '#fffdf4',
+            border: '20px double #d4af37',
+            padding: '60px 80px',
+            textAlign: 'center',
+            color: '#111',
+            fontFamily: 'Playfair Display, serif',
+            position: 'relative',
+            boxShadow: '0 0 22px rgba(0,0,0,0.25)',
+            backgroundImage: "url('/static/img/floral-bg.png')",
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center',
+            backgroundSize: 'cover'
+          }
+        },
+          createElement("img", {
+            src: "/static/img/logo.png",
+            style: { height: '85px', marginBottom: '20px' },
+            alt: "Logo"
+          }),
+          createElement("h1", {
+            style: { fontSize: '40px', color: '#2c3e50', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '1.5px', fontFamily: 'Cinzel, serif' }
+          }, "CERTIFICAT DE VITESSE DE FRAPPE"),
+          createElement("p", { style: { fontSize: '17px', color: '#555' } }, "Ce certificat est officiellement décerné à"),
+          createElement("h2", { style: { fontSize: '34px', margin: '25px 0', fontWeight: 'bold', color: '#000', fontFamily: 'Cinzel, serif' } }, props.username),
+          createElement("p", { style: { fontSize: '16px', color: '#333' } }, `Email : ${props.email}`),
+          createElement("p", { style: { fontSize: '18px', color: '#444', marginTop: '24px' } }, "a atteint la vitesse suivante :"),
+          createElement("div", {
+            style: { fontSize: '48px', fontWeight: 'bold', color: '#1e3a8a', margin: '20px' }
+          }, `${props.wpm} mots par minute`),
+          createElement("p", { style: { fontSize: '16px', color: '#444' } }, `Date : ${props.date}`),
+          createElement("div", { style: { position: 'absolute', bottom: '30px', left: '80px', fontSize: '13px', color: '#444', fontFamily: 'monospace' } },
+            `ID certificat : ${certId}`
+          ),
+          createElement("div", { style: { position: 'absolute', bottom: '60px', right: '80px', textAlign: 'right' } },
+            createElement("img", {
+              src: "/static/img/signature.png",
+              alt: "Signature",
+              style: { height: '120px', marginBottom: '5px' }
+            }),
+            createElement("p", { style: { fontWeight: 'bold', fontFamily: 'Cinzel, serif', fontSize: '18px', margin: 0 } }, "O. Harold"),
+            createElement("p", { style: { fontStyle: 'italic', fontSize: '14px', color: '#555', margin: 0 } }, "Responsable de la plateforme")
+          )
+        ),
+        createElement("button", {
+          onClick: downloadPDF,
+          style: {
+            marginTop: '30px',
+            padding: '12px 24px',
+            backgroundColor: '#1e3a8a',
+            color: '#fff',
+            fontSize: '16px',
+            border: 'none',
+            borderRadius: '6px',
+            cursor: 'pointer',
+            boxShadow: '0 2px 6px rgba(0,0,0,0.2)'
+          }
+        }, "📄 Télécharger le PDF")
+      );
+    }
+
+    const props = JSON.parse(document.getElementById("certificat-root").dataset.props);
+    ReactDOM.createRoot(document.getElementById("certificat-root")).render(
+      React.createElement(CertificatAcad, props)
+    );
+  </script>
+</body>
+</html>

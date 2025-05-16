@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% block title %}Test de frappe{% endblock %}
+
+{% block content %}
+<section class="min-h-screen flex items-center justify-center px-4 relative z-10">
+  <div class="bg-gray-900 border border-gray-700 shadow-2xl rounded-2xl p-6 w-full max-w-4xl text-gray-100 backdrop-blur-sm bg-opacity-90">
+    <h2 class="text-3xl font-bold text-center text-blue-400 mb-6">Test de vitesse de frappe</h2>
+
+    <div id="timer" class="text-center text-xl font-semibold mb-4 text-white">Temps restant : 60s</div>
+
+    <div id="words" class="text-xl sm:text-2xl md:text-3xl font-mono text-center leading-relaxed mb-6"></div>
+
+    <input type="text" id="input" autofocus
+           class="absolute opacity-0 pointer-events-none">
+
+    <form id="result-form" method="POST" action="/test">
+      <input type="hidden" name="typed" id="typed">
+      <input type="hidden" name="original" id="original">
+      <input type="hidden" name="time" id="time">
+    </form>
+  </div>
+</section>
+
+<script>
+  const input = document.getElementById("input");
+  const wordsDiv = document.getElementById("words");
+  const timerDiv = document.getElementById("timer");
+  let allWords = [];
+  let currentWords = [];
+  let currentWordIndex = 0;
+  let typedChars = "";
+  let correctChars = 0;
+  let totalChars = 0;
+  let timer = 60;
+  let startTime = null;
+  let timerInterval;
+  let generatedWords = [];
+
+  async function loadWords(n = 20) {
+    const res = await fetch("/api/words");
+    const data = await res.json();
+    allWords.push(...data.words);
+    generatedWords.push(...data.words);
+  }
+
+  function showNextWords() {
+    currentWords = allWords.splice(0, 4);
+    currentWordIndex = 0;
+    renderWords();
+  }
+
+  function renderWords() {
+    wordsDiv.innerHTML = "";
+    for (let word of currentWords) {
+      const wordSpan = document.createElement("span");
+      wordSpan.classList.add("word", "inline-block", "mx-2");
+      for (let c of word + " ") {
+        const span = document.createElement("span");
+        span.textContent = c;
+        span.classList.add("inline-block");
+        wordSpan.appendChild(span);
+      }
+      wordsDiv.appendChild(wordSpan);
+    }
+  }
+
+  function updateHighlight(inputValue) {
+    const word = currentWords[currentWordIndex];
+    const currentSpan = wordsDiv.children[currentWordIndex].querySelectorAll("span");
+    for (let i = 0; i < currentSpan.length; i++) {
+      currentSpan[i].className = "";
+      if (i < inputValue.length) {
+        if (inputValue[i] === currentSpan[i].textContent) {
+          currentSpan[i].classList.add("correct", "text-green-400");
+        } else {
+          currentSpan[i].classList.add("incorrect", "text-red-400");
+        }
+      }
+    }
+  }
+
+  input.addEventListener("input", () => {
+    const word = currentWords[currentWordIndex] + " ";
+    const value = input.value;
+
+    if (!startTime) {
+      startTime = Date.now();
+      timerInterval = setInterval(updateTimer, 1000);
+    }
+
+    updateHighlight(value);
+
+    if (value.endsWith(" ")) {
+      for (let i = 0; i < word.length; i++) {
+        totalChars++;
+        if (value[i] === word[i]) correctChars++;
+      }
+
+      typedChars += value;
+      input.value = "";
+      currentWordIndex++;
+
+      if (currentWordIndex >= currentWords.length) {
+        if (allWords.length < 4) {
+          loadWords(20).then(() => showNextWords());
+        } else {
+          showNextWords();
+        }
+      } else {
+        renderWords();
+      }
+    }
+  });
+
+  function updateTimer() {
+    const elapsed = Math.floor((Date.now() - startTime) / 1000);
+    const remaining = 60 - elapsed;
+    timerDiv.textContent = "Temps restant : " + remaining + "s";
+    if (remaining <= 0) {
+      clearInterval(timerInterval);
+      input.disabled = true;
+      submitResults();
+    }
+  }
+
+  function submitResults() {
+    const totalTime = (Date.now() - startTime) / 1000;
+    document.getElementById("typed").value = typedChars.trim();
+    document.getElementById("original").value = generatedWords.join(" ");
+    document.getElementById("time").value = totalTime;
+    document.getElementById("result-form").submit();
+  }
+
+  loadWords().then(() => {
+    showNextWords();
+    input.focus();
+  });
+</script>
+{% endblock %}

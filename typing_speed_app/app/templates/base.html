@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Typing Speed App{% endblock %}</title>
+
+  <!-- TailwindCSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Vanta + Three.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+
+<body class="relative min-h-screen flex flex-col overflow-hidden text-gray-100">
+
+  <!-- FOND VANTA -->
+  <div id="neuronal-bg" class="absolute inset-0 -z-10"></div>
+
+  <!-- HEADER -->
+  <header class="bg-gray-950 bg-opacity-80 shadow-lg py-4 px-6 flex justify-between items-center border-b border-gray-700 relative z-10">
+    <h1 class="text-2xl font-bold text-blue-500 tracking-wide">TypingSpeedApp</h1>
+    <nav class="space-x-6 text-sm">
+      <a href="/profil" class="hover:text-blue-400 transition">Profil</a>
+      <a href="/test" class="hover:text-blue-400 transition">Test</a>
+      <a href="/logout" class="text-red-500 hover:text-red-400 transition">Déconnexion</a>
+    </nav>
+  </header>
+
+  <!-- CONTENU -->
+  <main class="flex-1 px-4 sm:px-8 py-8 relative z-10">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-950 bg-opacity-80 text-center text-sm text-gray-400 py-4 border-t border-gray-700 relative z-10">
+    &copy; 2025 TypingSpeedApp — Tous droits réservés
+  </footer>
+
+  <!-- SCRIPT D’INITIALISATION -->
+  <script>
+    VANTA.NET({
+      el: "#neuronal-bg",
+      color: 0x00ffff,
+      backgroundColor: 0x0a0f1a,
+      points: 12.0,
+      maxDistance: 25.0,
+      spacing: 16.0,
+      showDots: true
+    });
+  </script>
+</body>
+</html>

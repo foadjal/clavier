@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Résultat du test{% endblock %}
+
+{% block content %}
+<section class="min-h-screen flex items-center justify-center px-4 relative z-10">
+  <div class="bg-gray-900 border border-gray-700 shadow-xl rounded-2xl p-8 w-full max-w-lg text-center backdrop-blur-sm bg-opacity-90">
+    <h2 class="text-3xl font-bold text-blue-400 mb-6">🎯 Résultat du test</h2>
+
+    <p class="text-xl text-gray-300 mb-4">Votre vitesse de frappe est de</p>
+    <p class="text-4xl text-green-400 font-bold mb-6">{{ wpm }} WPM</p>
+
+    <p class="text-xl text-gray-300 mb-2">Précision</p>
+    <p class="text-2xl text-yellow-400 font-semibold mb-8">{{ accuracy }}%</p>
+
+    <div class="flex justify-center gap-6">
+      <a href="/test" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg transition">
+        🔁 Refaire un test
+      </a>
+      <a href="/profil" class="bg-gray-700 hover:bg-gray-800 text-white px-5 py-2 rounded-lg transition">
+        👤 Retour au profil
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}

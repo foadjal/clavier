@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="min-h-screen flex items-center justify-center relative z-10 px-4">
+  <div class="bg-gray-900 border border-gray-700 shadow-2xl rounded-2xl p-8 w-full max-w-md backdrop-blur-sm bg-opacity-90">
+    <h2 class="text-3xl font-bold text-center text-blue-400 mb-6 tracking-wide">Connexion</h2>
+
+    {% if error %}
+      <div class="bg-red-900 text-red-300 px-4 py-2 rounded mb-4 text-sm border border-red-500">
+        {{ error }}
+      </div>
+    {% endif %}
+
+    <form method="POST" action="/login" class="space-y-5">
+      <div>
+        <label class="block text-sm font-medium text-gray-300">Adresse email</label>
+        <input type="email" name="email" required
+               class="mt-1 w-full px-4 py-2 bg-gray-800 text-gray-100 border border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-300">Mot de passe</label>
+        <input type="password" name="password" required
+               class="mt-1 w-full px-4 py-2 bg-gray-800 text-gray-100 border border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none">
+      </div>
+
+      <button type="submit"
+              class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-md transition duration-150">
+        Se connecter
+      </button>
+    </form>
+
+    <p class="text-center text-sm text-gray-400 mt-6">
+      Pas encore inscrit ?
+      <a href="/register" class="text-blue-400 hover:underline">Créer un compte</a>
+    </p>
+
+    <p class="text-center text-sm text-gray-400 mt-2">
+      <a href="/forgot-password" class="text-blue-400 hover:underline">Mot de passe oublié ?</a>
+    </p>
+  </div>
+</section>
+{% endblock %}

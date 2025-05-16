@@ -1,0 +1,33 @@
+# Environnements
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# PyCharm
+*.iml
+
+# Configuration
+.env
+*.db
+*.sqlite3
+
+# Tests ou artefacts
+*.log
+coverage/
+dist/
+build/
+
+# Certificats ou PDF générés
+*.pdf
+/static/img/*.png
+/static/img/*.svg
